@@ -2,6 +2,7 @@ package com.udacity.jwdnd.mvc_basics2.chatApplication.controller;
 
 import com.udacity.jwdnd.mvc_basics2.chatApplication.model.ChatMessage;
 import com.udacity.jwdnd.mvc_basics2.chatApplication.service.MessageListService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +23,16 @@ public class ChatController {
     @GetMapping()
     public String getHomePage(ChatMessage messageForm, Model model) {
         model.addAttribute("greetings", this.messageListService.getMessage(messageForm.getUserName()));
-        return "home";
+        return "chat";
     }
 
     @PostMapping()
-    public String addMessage(ChatMessage messageForm, Model model) {
+    public String addMessage(Authentication authentication, ChatMessage messageForm, Model model) {
+        messageForm.setUserName(authentication.getName());
         messageListService.insertMessage(messageForm);
         model.addAttribute("greetings", messageListService.getMessage(messageForm.getUserName()));
         messageForm.setMessageText("");
-        return "home";
+        return "chat";
     }
 
 }
