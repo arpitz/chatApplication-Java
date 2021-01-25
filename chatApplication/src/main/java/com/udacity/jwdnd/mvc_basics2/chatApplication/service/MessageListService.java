@@ -4,7 +4,6 @@ import com.udacity.jwdnd.mvc_basics2.chatApplication.model.ChatMessage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,11 +20,11 @@ public class MessageListService{
         System.out.println("creating message service bean");
     }
 
-    public ChatMessage getMessage(String username) {
-        return messagesMapper.getMessage(username);
+    public List<ChatMessage> getChatMessages() {
+        return messagesMapper.getAllMessages();
     }
 
     public void insertMessage(ChatMessage chatMessage) {
-        messagesMapper.insertMessage(chatMessage.getUserName(), chatMessage.getMessageText());
+        messagesMapper.insertMessage(new ChatMessage(null, chatMessage.getUsername(), chatMessage.getMessageText()));
     }
 }

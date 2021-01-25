@@ -10,9 +10,11 @@
 <body>
 <form action="#" th:object="${messageForm}" method="POST" th:action="@{'/chat'}">
     <label for="newMessageText">Submit a new message: </label>
-    <input type="text" id="newMessageText" name="newMessageText" th:field="*{text}">
+    <input type="text" id="newMessageText" name="messageText" th:field="*{messageText}">
     <input type="submit">
 </form>
-<h1 th:each="msg : ${greetings}" th:text="${msg}" th:unless="${msg.contains('Goodbye')}">Hello, homepage!</h1>
+<div th:each="chatMessage : ${greetings}">
+    <span th:text="${chatMessage.username}">Username</span>: <span th:text="${chatMessage.messageText}">Hello, world!</span>
+</div>
 </body>
 </html>

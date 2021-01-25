@@ -21,16 +21,16 @@ public class ChatController {
     }
 
     @GetMapping()
-    public String getHomePage(ChatMessage messageForm, Model model) {
-        model.addAttribute("greetings", this.messageListService.getMessage(messageForm.getUserName()));
+    public String getHomePage(@ModelAttribute("messageForm") ChatMessage messageForm, Model model) {
+        model.addAttribute("greetings", this.messageListService.getChatMessages());
         return "chat";
     }
 
     @PostMapping()
-    public String addMessage(Authentication authentication, ChatMessage messageForm, Model model) {
-        messageForm.setUserName(authentication.getName());
+    public String addMessage(Authentication authentication, @ModelAttribute("messageForm") ChatMessage messageForm, Model model) {
+        messageForm.setUsername(authentication.getName());
         messageListService.insertMessage(messageForm);
-        model.addAttribute("greetings", messageListService.getMessage(messageForm.getUserName()));
+        model.addAttribute("greetings", messageListService.getChatMessages());
         messageForm.setMessageText("");
         return "chat";
     }
